@@ -18,6 +18,7 @@ public class IntegrityVerifierClient {
         try {
             SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
             SSLSocket socket = (SSLSocket) socketFactory.createSocket("localhost", 7070);
+            socket.setEnabledCipherSuites(new String[]{"TLSv1", "TLSv1.1", "TLSv1.2", "SSLv3"});
             
             Mac mac = Mac.getInstance("HmacSHA512");
             mac.init(Utils.getKey());
@@ -60,5 +61,10 @@ public class IntegrityVerifierClient {
         finally {
             System.exit(0);
         }
+
+
+    }
+    public static void main( String args[]){
+        new IntegrityVerifierClient();
     }
 }

@@ -6,6 +6,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 
 import utils.Utils;
 
@@ -46,7 +47,7 @@ public class IntegrityVerifierServer {
             // Espera las peticiones del cliente para comprobar mensaje/MAC
             try {
                 System.err.println( "Esperando conexiones de clientes...");
-                Socket socket = (Socket) serverSocket.accept();
+                SSLSocket socket = (SSLSocket) serverSocket.accept();
         		Integer lastOffset = -1;
                 // Abre un BufferedReader para leer los datos del cliente
                 BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -91,5 +92,10 @@ public class IntegrityVerifierServer {
             catch ( IOException ioException ) {
                 ioException.printStackTrace(); }
         }
+    }
+
+    public static void main(String args[]) throws Exception {
+        IntegrityVerifierServer server = new IntegrityVerifierServer();
+        server.runServer();
     }
 }
