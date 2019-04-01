@@ -4,6 +4,9 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ServerSocketFactory;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+
 import utils.Utils;
 
 import java.io.*;
@@ -16,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IntegrityVerifierServer {
-    private ServerSocket serverSocket;
+    private SSLServerSocket serverSocket;
     private Map<String, Integer> clientOffsets;
     private Map<String, String> clientKeys;
     private Double totalCalls;
@@ -25,9 +28,9 @@ public class IntegrityVerifierServer {
     // Constructor del Servidor
     public IntegrityVerifierServer() throws Exception {
         // ServerSocketFactory para construir los ServerSockets
-        ServerSocketFactory socketFactory = ( ServerSocketFactory ) ServerSocketFactory.getDefault();
+        SSLServerSocketFactory socketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
         // Creación de un objeto ServerSocket escuchando peticiones en el puerto 7070
-        serverSocket = (ServerSocket ) socketFactory.createServerSocket(7070);
+        serverSocket = (SSLServerSocket ) socketFactory.createServerSocket(7070);
         clientOffsets = new HashMap<String, Integer>();
         clientKeys = Utils.getClientKeys();
         totalCalls = 0.;

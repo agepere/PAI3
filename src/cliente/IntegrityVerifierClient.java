@@ -3,6 +3,8 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
@@ -14,8 +16,8 @@ public class IntegrityVerifierClient {
     // Constructor que abre una conexión Socket para enviar mensaje/MAC al servidor
     public IntegrityVerifierClient() {
         try {
-            SocketFactory socketFactory = (SocketFactory) SocketFactory.getDefault();
-            Socket socket = (Socket) socketFactory.createSocket("localhost", 7070);
+            SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+            SSLSocket socket = (SSLSocket) socketFactory.createSocket("localhost", 7070);
             
             Mac mac = Mac.getInstance("HmacSHA512");
             mac.init(Utils.getKey());
